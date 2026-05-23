@@ -1,22 +1,8 @@
 {
-  "builds": [
+  "rewrites": [
     {
-      "src": "artista.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "Photos/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    },
-    {
-      "src": "/",
-      "dest": "/artista.html"
+      "source": "/",
+      "destination": "/artista.html"
     }
   ]
 }

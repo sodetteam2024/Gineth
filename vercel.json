@@ -1,3 +1,14 @@
 {
-  "builds": [{ "src": "artista.html", "use": "@vercel/static" }]
+  "builds": [
+    {
+      "src": "artista.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/artista.html"
+    }
+  ]
 }

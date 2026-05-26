@@ -637,26 +637,79 @@
     @media (max-width: 768px) {
       .hero-launch {
         flex-direction: column !important;
-        padding: 7rem 1.5rem 3rem !important;
+        align-items: flex-start !important;
+        padding: 6rem 1.4rem 2.5rem !important;
       }
+
+      .launch-inner {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      .launch-title {
+        font-size: clamp(2.8rem, 14vw, 4.5rem) !important;
+      }
+
+      .launch-meta {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: .35rem !important;
+      }
+
+      .launch-meta-dot { display: none !important; }
+
+      .countdown-wrap { width: 100% !important; }
+
+      .countdown {
+        gap: .3rem !important;
+        width: 100% !important;
+      }
+
+      .cd-block {
+        flex: 1 !important;
+        min-width: 0 !important;
+        padding: .75rem .3rem !important;
+      }
+
+      .cd-num {
+        font-size: clamp(1.6rem, 7.5vw, 2.6rem) !important;
+      }
+
+      .cd-label {
+        font-size: .52rem !important;
+        letter-spacing: .08em !important;
+      }
+
+      .cd-sep {
+        font-size: 1.6rem !important;
+        padding-bottom: .8rem !important;
+      }
+
+      .hero-btns {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: .7rem !important;
+      }
+
+      .hero-btns a { text-align: center !important; }
 
       .hero-photos {
-        position: static;
-        transform: none;
-        flex-direction: row;
-        justify-content: center;
-        gap: .7rem;
-        mask-image: none;
-        -webkit-mask-image: none;
-        width: 100%;
-        margin-top: 1.5rem;
-        overflow-x: auto;
-        padding-bottom: .5rem;
+        position: static !important;
+        transform: none !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: .6rem !important;
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
+        width: 100% !important;
+        margin-top: 1.2rem !important;
+        overflow-x: auto !important;
+        padding-bottom: .5rem !important;
       }
 
-      .hp1 { width: 42vw; height: 52vw; align-self: auto; animation: none; }
-      .hp2 { width: 34vw; height: 42vw; align-self: auto; margin-left: 0; animation: none; }
-      .hp3 { width: 38vw; height: 46vw; align-self: auto; margin-top: 0; animation: none; }
+      .hp1 { width: 42vw !important; height: 52vw !important; align-self: auto !important; animation: none !important; }
+      .hp2 { width: 34vw !important; height: 42vw !important; align-self: auto !important; margin-left: 0 !important; animation: none !important; }
+      .hp3 { width: 38vw !important; height: 46vw !important; align-self: auto !important; margin-top: 0 !important; animation: none !important; }
     }
 
     /* ── VINYL (eliminado, mantener por si se reactiva) ── */
@@ -970,9 +1023,9 @@
     <div class="tour-list">
       <!-- LANZAMIENTO ESPECIAL -->
       <div class="tour-item tour-item-featured">
-        <div class="tour-date" style="color:var(--fuchsia)">28<span>May 2025</span></div>
+        <div class="tour-date" style="color:var(--fuchsia)">30<span>May 2025</span></div>
         <div class="tour-info">
-          <h3>🎶 Lanzamiento — "Ya no estás"</h3>
+          <h3>🎶 Presentacion — "Ya no estás"</h3>
           <p>Primer sencillo oficial · Restaurante Oye Bonita</p>
         </div>
         <div class="tour-venue">
@@ -1136,7 +1189,7 @@
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
             <span>foto1.jpg</span>
           </div>
-          <div class="slide-caption"></div>
+          <div class="slide-caption">Ingenieria Industrial</div>
         </div>
 
         <div class="carousel-slide">
@@ -1185,12 +1238,52 @@
         </div>
 
         <div class="carousel-slide">
-          <img src="./Photos/GinethHistoria7.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          <a href="https://www.youtube.com/watch?v=oq_X05h14LY">
+            <img src="./Photos/GinethHistoria7.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          </a>
           <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
             <span>foto7.jpg</span>
           </div>
-          <div class="slide-caption">Cover En Pandemia</div>
+          <div class="slide-caption">Cover en Pandemia</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="./Photos/GinethHistoria8.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <span>foto8.jpg</span>
+          </div>
+          <div class="slide-caption">En el cerrejon</div>
+        </div>
+        <div class="carousel-slide">
+          <a href="https://www.instagram.com/p/BRPqP-ahKG5/?igsh=NDU4bTBkZm51cTk5">
+            <img src="./Photos/GinethHistoria9.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          </a>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <span>foto9.jpg</span>
+          </div>
+          <div class="slide-caption">Fuiste tú💜💜</div>
+        </div>
+        <div class="carousel-slide">
+          <a href="https://www.instagram.com/p/BX4G1MHgZP4/?img_index=2&igsh=c29xbXdhcW0xY3k2">
+            <img src="./Photos/GinethHistoria10.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          </a>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <span>foto10.jpg</span>
+          </div>
+          <div class="slide-caption">Aparicion en TV</div>
+        </div>
+        <div class="carousel-slide">
+          <a href="https://www.instagram.com/p/BZyW66_gwdM/?igsh=NWVtcmNkenJxNGV3">
+            <img src="./Photos/GinethHistoria11.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          </a>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <span>foto11.jpg</span>
+          </div>
+          <div class="slide-caption">Los gitanos - Tuna de la  Universidad de la Costa</div>
         </div>
 
       </div>
@@ -1211,11 +1304,11 @@
   <p class="section-label">Sobre mi</p>
   <h2>Un poco de mi historia</h2>
   <p>
-    Desde muy joven descubrí mi pasión por la música y el arte. 
-    Comencé tocando en pequeños escenarios de mi ciudad, y con el tiempo 
-    fui encontrando mi estilo propio. Cada experiencia, cada presentación 
-    y cada obra me ayudaron a crecer, convirtiendo mi historia en un 
-    recorrido de aprendizaje y creatividad constante.
+    Desde muy joven, la música ha sido parte esencial de mi vida. En 2015 inicié mi formación artística realizando un técnico en música en la Escuela Distrital de Arte de mi ciudad, un proceso que fortaleció mi pasión por el canto y la interpretación.
+Aunque decidí estudiar Ingeniería Industrial en la universidad, nunca me alejé del arte. Durante mi etapa universitaria participé activamente en agrupaciones culturales como la tuna, el coro y el grupo de folclor Numbalé. En la tuna me destaqué como cantante y ejecutando las castañuelas, mientras que en el grupo folclórico fui una de las voces principales, representando con orgullo nuestras raíces musicales.
+Después de graduarme como ingeniera industrial, inicié mi camino profesional en el sector bancario y financiero. Sin embargo, la música siempre siguió viva en mí. Fue entonces cuando descubrí el mundo de los lives y el streaming, espacios que me permitieron volver a conectar con el público desde una manera más cercana y auténtica.
+Entre 2022 y 2023 hice parte de la plataforma Bigo Live, donde fortalecí mi presencia como cantante en transmisiones en vivo. A finales de 2023 inicié una nueva etapa en TikTok Live, plataforma en la que actualmente continúo creciendo y construyendo una comunidad que ha creído profundamente en mi talento y en mi voz.
+Gracias al apoyo de esa comunidad, hoy estoy dando uno de los pasos más importantes de mi carrera artística: lanzar mi primer sencillo de autoría propia. Oficialmente, estoy iniciando mi camino como cantautora, llevando conmigo todas las experiencias, escenarios y aprendizajes que han marcado mi historia.
   </p>
   <div class="nl-form">
     

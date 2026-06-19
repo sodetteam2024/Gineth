@@ -7,19 +7,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --black:    #090909;
-      --deep:     #100d1a;
-      --purple:   #5b2d8e;
-      --violet:   #7b3fbe;
-      --lavender: #c084fc;
-      --fuchsia:  #e040fb;
-      --pink:     #f472d0;
-      --white:    #f5f0ff;
-      --muted:    #a89ac0;
+      --black:    #0a0505;
+      --deep:     #150808;
+      --crimson:  #7a0f1e;
+      --red:      #b01b2e;
+      --rose:     #e04060;
+      --coral:    #f47288;
+      --blush:    #fca5b4;
+      --white:    #fff5f7;
+      --muted:    #c09aa0;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -30,7 +29,6 @@
       overflow-x: hidden;
     }
 
-    /* ── NOISE OVERLAY ── */
     body::before {
       content: '';
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -38,79 +36,121 @@
       opacity: .5;
     }
 
+    /* ── FLOATING SOCIAL ICONS ── */
+    .floating-socials {
+      position: fixed;
+      right: 1.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+    }
+
+    .float-icon {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: transform .3s, box-shadow .3s;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .float-icon:nth-child(1) { background: radial-gradient(circle at 30% 30%, #f77737, #e1306c, #833ab4, #405de6); animation: floatSocial 4s ease-in-out infinite 0s; }
+    .float-icon:nth-child(2) { background: #ff0000; animation: floatSocial 4s ease-in-out infinite .6s; }
+    .float-icon:nth-child(3) { background: #1DB954; animation: floatSocial 4s ease-in-out infinite 1.2s; }
+    .float-icon:nth-child(4) { background: #000000; border: 1px solid rgba(255,255,255,.2); animation: floatSocial 4s ease-in-out infinite 1.8s; }
+
+    .float-icon:hover {
+      transform: scale(1.2) !important;
+      box-shadow: 0 0 20px rgba(224,64,80,.6);
+      animation-play-state: paused;
+    }
+
+    .float-icon svg { width: 22px; height: 22px; fill: white; }
+
+    .float-icon::after {
+      content: attr(data-label);
+      position: absolute;
+      right: 54px;
+      background: rgba(10,5,5,.9);
+      color: var(--blush);
+      font-size: .65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .3rem .7rem;
+      border-radius: 3px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+      border: 1px solid rgba(224,64,80,.3);
+    }
+
+    .float-icon:hover::after { opacity: 1; }
+
+    @keyframes floatSocial {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-7px); }
+    }
+
+    @media (max-width: 768px) {
+      .floating-socials {
+        top: auto; bottom: 1rem;
+        right: 50%; transform: translateX(50%);
+        flex-direction: row;
+      }
+      .float-icon { width: 40px; height: 40px; }
+      .float-icon::after { display: none; }
+    }
+
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.4rem 3rem;
-      background: linear-gradient(to bottom, rgba(9,9,9,.95), transparent);
+      background: linear-gradient(to bottom, rgba(10,5,5,.95), transparent);
     }
 
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: .15em;
-      color: var(--white);
-      text-decoration: none;
+      font-size: 1.6rem; letter-spacing: .15em;
+      color: var(--white); text-decoration: none;
     }
 
-    .nav-links {
-      display: flex; gap: 2.2rem; list-style: none;
-    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
 
     .nav-links a {
-      text-decoration: none;
-      font-size: .78rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color .25s;
+      text-decoration: none; font-size: .78rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted); transition: color .25s;
     }
 
-    .nav-links a:hover { color: var(--fuchsia); }
-
-    .nav-cta {
-      background: transparent;
-      border: 1px solid var(--fuchsia);
-      color: var(--fuchsia);
-      padding: .45rem 1.3rem;
-      border-radius: 2px;
-      font-size: .75rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background .25s, color .25s;
-    }
-
-    .nav-cta:hover { background: var(--fuchsia); color: var(--black); }
+    .nav-links a:hover { color: var(--rose); }
 
     /* ── HERO ── */
     .hero {
-      position: relative;
-      min-height: 100vh;
+      position: relative; min-height: 100vh;
       display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 6rem 3rem 5rem;
-      overflow: hidden;
+      padding: 6rem 3rem 5rem; overflow: hidden;
     }
 
     .hero-bg {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 60% 30%, rgba(91,45,142,.55) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 50% at 80% 70%, rgba(224,64,251,.25) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 10% 90%, rgba(123,63,190,.3) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 60% at 60% 30%, rgba(122,15,30,.55) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 70%, rgba(176,27,46,.25) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 10% 90%, rgba(224,64,96,.3) 0%, transparent 60%),
         var(--deep);
     }
 
-    /* decorative circle */
     .hero-circle {
-      position: absolute;
-      width: 560px; height: 560px;
-      border-radius: 50%;
-      top: 50%; right: 6%;
-      transform: translateY(-50%);
-      background: radial-gradient(circle, rgba(224,64,251,.18) 0%, rgba(91,45,142,.10) 50%, transparent 75%);
-      border: 1px solid rgba(224,64,251,.15);
+      position: absolute; width: 560px; height: 560px; border-radius: 50%;
+      top: 50%; right: 6%; transform: translateY(-50%);
+      background: radial-gradient(circle, rgba(224,64,96,.18) 0%, rgba(122,15,30,.10) 50%, transparent 75%);
+      border: 1px solid rgba(224,64,96,.15);
       animation: pulse 6s ease-in-out infinite;
     }
 
@@ -122,81 +162,52 @@
     .hero-inner { position: relative; z-index: 2; max-width: 720px; }
 
     .hero-eyebrow {
-      display: inline-block;
-      font-size: .7rem;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: var(--fuchsia);
-      margin-bottom: 1.2rem;
+      display: inline-block; font-size: .7rem; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: 1.2rem;
     }
 
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(4.5rem, 10vw, 8.5rem);
-      line-height: .95;
-      letter-spacing: .04em;
-      color: var(--white);
-      text-shadow: 0 0 80px rgba(224,64,251,.3);
+      line-height: .95; letter-spacing: .04em; color: var(--white);
+      text-shadow: 0 0 80px rgba(224,64,96,.3);
     }
 
     .hero-title em {
       font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 1.05em;
-      color: var(--lavender);
-      display: block;
+      font-style: italic; font-weight: 300; font-size: 1.05em;
+      color: var(--blush); display: block;
     }
 
-    .hero-sub {
-      margin-top: 1.8rem;
-      font-size: .95rem;
-      line-height: 1.7;
-      color: var(--muted);
-      max-width: 420px;
-    }
+    .hero-sub { margin-top: 1.8rem; font-size: .95rem; line-height: 1.7; color: var(--muted); max-width: 420px; }
 
-    .hero-btns {
-      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
-    }
+    .hero-btns { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--fuchsia), var(--violet));
-      color: var(--white);
-      border: none; padding: .8rem 2.2rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
-      cursor: pointer; border-radius: 2px;
-      box-shadow: 0 0 30px rgba(224,64,251,.35);
+      background: linear-gradient(135deg, var(--rose), var(--crimson));
+      color: var(--white); border: none; padding: .8rem 2.2rem;
+      font-family: 'DM Sans', sans-serif; font-size: .8rem; letter-spacing: .12em;
+      text-transform: uppercase; cursor: pointer; border-radius: 2px;
+      box-shadow: 0 0 30px rgba(224,64,96,.35);
       transition: box-shadow .3s, transform .2s;
       text-decoration: none; display: inline-block;
     }
 
-    .btn-primary:hover {
-      box-shadow: 0 0 50px rgba(224,64,251,.6);
-      transform: translateY(-2px);
-    }
+    .btn-primary:hover { box-shadow: 0 0 50px rgba(224,64,96,.6); transform: translateY(-2px); }
 
     .btn-ghost {
-      background: transparent;
-      color: var(--white); border: 1px solid rgba(245,240,255,.3);
-      padding: .8rem 2.2rem;
-      font-family: 'DM Sans', sans-serif;
+      background: transparent; color: var(--white); border: 1px solid rgba(255,245,247,.3);
+      padding: .8rem 2.2rem; font-family: 'DM Sans', sans-serif;
       font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
       cursor: pointer; border-radius: 2px;
       transition: border-color .3s, color .3s;
       text-decoration: none; display: inline-block;
     }
 
-    .btn-ghost:hover { border-color: var(--lavender); color: var(--lavender); }
+    .btn-ghost:hover { border-color: var(--blush); color: var(--blush); }
 
-    /* ── SECTION LABEL ── */
-    .section-label {
-      font-size: .7rem; letter-spacing: .25em; text-transform: uppercase;
-      color: var(--fuchsia); margin-bottom: .8rem;
-    }
+    .section-label { font-size: .7rem; letter-spacing: .25em; text-transform: uppercase; color: var(--rose); margin-bottom: .8rem; }
 
-    /* ── TOUR / EVENTOS ── */
     .section { padding: 7rem 3rem; position: relative; z-index: 2; }
 
     .section-header {
@@ -204,132 +215,22 @@
       margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;
     }
 
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      letter-spacing: .06em;
-      line-height: 1;
-    }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: .06em; line-height: 1; }
 
-    .tour-item-featured {
-      border-color: rgba(224,64,251,.35) !important;
-      background: rgba(91,45,142,.15) !important;
-      position: relative;
-    }
+    /* ── MÚSICA GRID ── */
+    .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
 
-    .tour-item-featured::before {
-      content: '★ EVENTO ESPECIAL';
-      position: absolute; top: -1px; left: 1.8rem;
-      font-size: .58rem; letter-spacing: .18em;
-      color: var(--fuchsia);
-      background: var(--black);
-      padding: 0 .5rem;
-      transform: translateY(-50%);
-    }
+    .music-card { position: relative; overflow: hidden; border-radius: 4px; aspect-ratio: 1 / 1; cursor: pointer; }
 
-    .tour-list { display: flex; flex-direction: column; gap: .4rem; }
-
-    .tour-item {
-      display: grid;
-      grid-template-columns: 120px 1fr auto auto;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1.4rem 1.8rem;
-      border: 1px solid rgba(245,240,255,.07);
-      border-radius: 3px;
-      background: rgba(91,45,142,.06);
-      transition: background .25s, border-color .25s;
-      cursor: pointer;
-    }
-
-    .tour-item:hover {
-      background: rgba(91,45,142,.18);
-      border-color: rgba(224,64,251,.3);
-    }
-
-    .tour-date {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      color: var(--fuchsia);
-      letter-spacing: .06em;
-      line-height: 1;
-    }
-
-    .tour-date span {
-      display: block;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .68rem;
-      letter-spacing: .15em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .tour-info h3 {
-      font-size: 1rem; font-weight: 500; margin-bottom: .2rem;
-    }
-
-    .tour-info p {
-      font-size: .8rem; color: var(--muted);
-    }
-
-    .tour-venue {
-      text-align: right;
-    }
-
-    .tour-venue p {
-      font-size: .8rem; color: var(--muted);
-    }
-
-    .tour-venue strong {
-      display: block; font-size: .88rem; font-weight: 500; color: var(--white);
-      margin-bottom: .15rem;
-    }
-
-    .tag-sold {
-      font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--muted); border: 1px solid rgba(245,240,255,.15);
-      padding: .3rem .7rem; border-radius: 20px; white-space: nowrap;
-    }
-
-    .tag-tickets {
-      font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
-      background: linear-gradient(135deg, var(--fuchsia), var(--violet));
-      color: var(--white);
-      padding: .35rem .9rem; border-radius: 20px; white-space: nowrap;
-      transition: box-shadow .25s;
-    }
-
-    .tag-tickets:hover { box-shadow: 0 0 20px rgba(224,64,251,.5); }
-
-    /* ── MÚSICA ── */
-    .music-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.2rem;
-      margin-top: 1rem;
-    }
-
-    .music-card {
-      position: relative; overflow: hidden; border-radius: 4px;
-      aspect-ratio: 1 / 1;
-      cursor: pointer;
-    }
-
-    .music-card-bg {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform .4s;
-    }
-
+    .music-card-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: transform .4s; }
     .music-card:hover .music-card-bg { transform: scale(1.05); }
 
     .music-card-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(9,9,9,.85) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(10,5,5,.85) 0%, transparent 60%);
       opacity: 0; transition: opacity .3s;
       display: flex; align-items: flex-end; padding: 1rem;
     }
-
     .music-card:hover .music-card-overlay { opacity: 1; }
 
     .music-card-info h4 { font-size: .9rem; font-weight: 500; }
@@ -340,566 +241,212 @@
       transform: translate(-50%, -50%) scale(.8);
       opacity: 0; transition: opacity .3s, transform .3s;
       width: 48px; height: 48px; border-radius: 50%;
-      background: rgba(224,64,251,.9);
+      background: rgba(224,64,96,.9);
       display: flex; align-items: center; justify-content: center;
       border: none; cursor: pointer;
     }
-
     .music-card:hover .play-btn { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
-    /* ── NEWSLETTER ── */
+    /* ── STREAMING ── */
+    .streaming-section { padding: 5rem 3rem; position: relative; z-index: 2; text-align: center; }
+
+    .streaming-grid { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
+
+    .stream-btn {
+      display: flex; align-items: center; gap: .8rem;
+      padding: 1rem 2rem; border-radius: 50px; text-decoration: none;
+      font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500;
+      letter-spacing: .06em; transition: transform .25s, box-shadow .25s;
+      border: none; cursor: pointer;
+    }
+    .stream-btn:hover { transform: translateY(-3px); }
+    .stream-btn-yt { background: #ff0000; color: white; box-shadow: 0 4px 20px rgba(255,0,0,.35); }
+    .stream-btn-yt:hover { box-shadow: 0 6px 30px rgba(255,0,0,.55); }
+    .stream-btn-sp { background: #1DB954; color: white; box-shadow: 0 4px 20px rgba(29,185,84,.35); }
+    .stream-btn-sp:hover { box-shadow: 0 6px 30px rgba(29,185,84,.55); }
+    .stream-btn svg { width: 24px; height: 24px; fill: white; flex-shrink: 0; }
+
+    /* ── BIO / NEWSLETTER ── */
     .newsletter {
-      margin: 2rem 3rem 6rem;
-      padding: 4rem 3rem;
-      background: linear-gradient(135deg, rgba(91,45,142,.25) 0%, rgba(224,64,251,.12) 100%);
-      border: 1px solid rgba(224,64,251,.2);
-      border-radius: 6px;
-      text-align: center;
-      position: relative; z-index: 2;
-      overflow: hidden;
+      margin: 2rem 3rem 6rem; padding: 4rem 3rem;
+      background: linear-gradient(135deg, rgba(122,15,30,.25) 0%, rgba(224,64,96,.12) 100%);
+      border: 1px solid rgba(224,64,96,.2); border-radius: 6px;
+      text-align: center; position: relative; z-index: 2; overflow: hidden;
     }
-
     .newsletter::before {
-      content: '';
-      position: absolute; top: -60px; right: -60px;
+      content: ''; position: absolute; top: -60px; right: -60px;
       width: 250px; height: 250px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(224,64,251,.15), transparent 70%);
+      background: radial-gradient(circle, rgba(224,64,96,.15), transparent 70%);
     }
-
-    .newsletter h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      letter-spacing: .08em;
-      margin-bottom: .8rem;
-    }
-
+    .newsletter h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: .08em; margin-bottom: .8rem; }
     .newsletter p { color: var(--muted); font-size: .9rem; margin-bottom: 2rem; }
-
-    .nl-form { display: flex; gap: .6rem; max-width: 440px; margin: 0 auto; }
-
-    .nl-input {
-      flex: 1;
-      background: rgba(245,240,255,.07);
-      border: 1px solid rgba(245,240,255,.15);
-      color: var(--white);
-      padding: .75rem 1.2rem;
-      border-radius: 2px;
-      font-family: 'DM Sans', sans-serif; font-size: .85rem;
-      outline: none;
-      transition: border-color .25s;
-    }
-
-    .nl-input:focus { border-color: var(--fuchsia); }
-    .nl-input::placeholder { color: var(--muted); }
 
     /* ── FOOTER ── */
     footer {
-      border-top: 1px solid rgba(245,240,255,.07);
-      padding: 3rem;
+      border-top: 1px solid rgba(255,245,247,.07); padding: 3rem;
       display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1.5rem;
-      position: relative; z-index: 2;
+      flex-wrap: wrap; gap: 1.5rem; position: relative; z-index: 2;
     }
-
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem; letter-spacing: .15em;
-      color: var(--muted);
-    }
-
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: .15em; color: var(--muted); }
     .social-links { display: flex; gap: 1.4rem; }
+    .social-links a { color: var(--muted); text-decoration: none; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; transition: color .25s; }
+    .social-links a:hover { color: var(--rose); }
+    .footer-copy { font-size: .72rem; color: rgba(192,154,160,.5); letter-spacing: .05em; }
 
-    .social-links a {
-      color: var(--muted); text-decoration: none;
-      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
-      transition: color .25s;
-    }
+    .divider { height: 1px; background: linear-gradient(to right, transparent, rgba(224,64,96,.3), transparent); margin: 0 3rem; position: relative; z-index: 2; }
 
-    .social-links a:hover { color: var(--fuchsia); }
-
-    .footer-copy {
-      font-size: .72rem; color: rgba(168,154,192,.5);
-      letter-spacing: .05em;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(224,64,251,.3), transparent);
-      margin: 0 3rem;
-      position: relative; z-index: 2;
-    }
-
-    /* ── LAUNCH HERO EXTRAS ── */
+    /* ── HERO LAUNCH ── */
     .hero-launch {
-      min-height: 100vh;
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      justify-content: flex-start !important;
-      padding: 8rem 3rem 5rem !important;
-      overflow: hidden;
+      min-height: 100vh; display: flex !important; flex-direction: row !important;
+      align-items: center !important; justify-content: flex-start !important;
+      padding: 8rem 3rem 5rem !important; overflow: hidden;
     }
-
-    .launch-inner {
-      max-width: 700px;
-      display: flex; flex-direction: column; gap: .5rem;
-      position: relative; z-index: 2;
-    }
-
-    .hc2 {
-      width: 300px; height: 300px;
-      top: 20%; left: -80px;
-      animation-delay: 3s;
-      opacity: .4;
-    }
+    .launch-inner { max-width: 700px; display: flex; flex-direction: column; gap: .5rem; position: relative; z-index: 2; }
+    .hc2 { width: 300px; height: 300px; top: 20%; left: -80px; animation-delay: 3s; opacity: .4; }
 
     .launch-tag {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--fuchsia), var(--violet));
-      color: var(--white);
-      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
-      padding: .35rem 1rem; border-radius: 2px;
-      width: fit-content;
-      margin-bottom: .5rem;
-      box-shadow: 0 0 20px rgba(224,64,251,.4);
+      display: inline-block; background: linear-gradient(135deg, var(--rose), var(--crimson));
+      color: var(--white); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+      padding: .35rem 1rem; border-radius: 2px; width: fit-content; margin-bottom: .5rem;
+      box-shadow: 0 0 20px rgba(224,64,96,.4);
     }
+    .launch-title { font-size: clamp(4rem, 11vw, 9rem); line-height: .9; margin-bottom: .6rem; }
+    .launch-meta { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; color: var(--muted); font-size: .82rem; margin-bottom: 1.8rem; }
+    .launch-meta-item { display: flex; align-items: center; gap: .4rem; }
+    .launch-meta-dot { color: var(--red); font-size: 1.2rem; }
 
-    .launch-title {
-      font-size: clamp(4rem, 11vw, 9rem);
-      line-height: .9;
-      margin-bottom: .6rem;
-    }
-
-    .launch-meta {
-      display: flex; align-items: center; gap: .8rem;
-      flex-wrap: wrap;
-      color: var(--muted); font-size: .82rem;
-      margin-bottom: 1.8rem;
-    }
-
-    .launch-meta-item {
-      display: flex; align-items: center; gap: .4rem;
-    }
-
-    .launch-meta-dot { color: var(--violet); font-size: 1.2rem; }
-
-    /* COUNTDOWN */
-    .countdown-wrap {
-      margin-bottom: 2.2rem;
-    }
-
-    .cd-title-label {
-      font-size: .7rem;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: .8rem;
-    }
-
-    .countdown {
-      display: flex; align-items: center; gap: .8rem;
-    }
-
-    .cd-block {
-      display: flex; flex-direction: column; align-items: center;
-      background: rgba(91,45,142,.2);
-      border: 1px solid rgba(224,64,251,.25);
-      border-radius: 6px;
-      padding: 1.2rem 1.6rem;
-      min-width: 90px;
-      backdrop-filter: blur(6px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cd-block::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(224,64,251,.06), transparent);
-      pointer-events: none;
-    }
-
-    .cd-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.8rem;
-      line-height: 1;
-      color: var(--white);
-      text-shadow: 0 0 30px rgba(224,64,251,.7), 0 0 60px rgba(224,64,251,.3);
-      letter-spacing: .04em;
-    }
-
-    .cd-label {
-      font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--fuchsia); margin-top: .3rem;
-      font-weight: 500;
-    }
-
-    .cd-sep {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem; color: rgba(224,64,251,.5);
-      padding-bottom: 1.2rem;
-      line-height: 1;
-    }
-
-    /* ── HERO PHOTO COLLAGE ── */
+    /* ── HERO PHOTOS ── */
     .hero-photos {
-      position: absolute;
-      right: 3%;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      position: absolute; right: 3%; top: 50%; transform: translateY(-50%);
+      z-index: 2; display: flex; flex-direction: column; gap: 1rem;
       mask-image: linear-gradient(to right, transparent 0%, black 20%);
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
     }
-
     .hero-photo {
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-      border: 1px solid rgba(224,64,251,.25);
-      box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(224,64,251,.08);
+      border-radius: 8px; overflow: hidden; position: relative;
+      border: 1px solid rgba(224,64,96,.25);
+      box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(224,64,96,.08);
       transition: transform .4s ease, box-shadow .4s ease;
     }
-
-    .hero-photo:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 40px rgba(0,0,0,.6), 0 0 20px rgba(224,64,251,.2);
-    }
-
-    .hp1 {
-      width: 240px; height: 310px;
-      align-self: flex-end;
-      animation: floatA 7s ease-in-out infinite;
-    }
-    .hp2 {
-      width: 180px; height: 220px;
-      align-self: flex-start;
-      margin-left: -25px;
-      animation: floatB 8s ease-in-out infinite;
-    }
-    .hp3 {
-      width: 210px; height: 250px;
-      align-self: flex-end;
-      margin-top: -25px;
-      animation: floatA 9s ease-in-out infinite reverse;
-    }
-
-    @keyframes floatA {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-10px); }
-    }
-    @keyframes floatB {
-      0%, 100% { transform: translateY(-5px); }
-      50%       { transform: translateY(8px); }
-    }
-
-    .hero-photo img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: brightness(.88) saturate(1.15);
-    }
-
-    .hp-placeholder {
-      display: none;
-      width: 100%; height: 100%;
-      flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .5rem;
-      color: rgba(255,255,255,.4);
-      font-size: .62rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .hero-photo::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 55%, rgba(9,9,9,.45));
-      pointer-events: none;
-    }
-
-    /* ── TABLET: collage más pequeño ── */
-    @media (max-width: 1050px) {
-      .hero-photos {
-        right: 1%;
-      }
-      .hp1 { width: 170px; height: 220px; }
-      .hp2 { width: 130px; height: 160px; }
-      .hp3 { width: 150px; height: 185px; }
-    }
-
-    /* ── MÓVIL: tira horizontal debajo del countdown ── */
-    @media (max-width: 768px) {
-      .hero-launch {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        padding: 6rem 1.4rem 2.5rem !important;
-      }
-
-      .launch-inner {
-        max-width: 100% !important;
-        width: 100% !important;
-      }
-
-      .launch-title {
-        font-size: clamp(2.8rem, 14vw, 4.5rem) !important;
-      }
-
-      .launch-meta {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: .35rem !important;
-      }
-
-      .launch-meta-dot { display: none !important; }
-
-      .countdown-wrap { width: 100% !important; }
-
-      .countdown {
-        gap: .3rem !important;
-        width: 100% !important;
-      }
-
-      .cd-block {
-        flex: 1 !important;
-        min-width: 0 !important;
-        padding: .75rem .3rem !important;
-      }
-
-      .cd-num {
-        font-size: clamp(1.6rem, 7.5vw, 2.6rem) !important;
-      }
-
-      .cd-label {
-        font-size: .52rem !important;
-        letter-spacing: .08em !important;
-      }
-
-      .cd-sep {
-        font-size: 1.6rem !important;
-        padding-bottom: .8rem !important;
-      }
-
-      .hero-btns {
-        flex-direction: column !important;
-        width: 100% !important;
-        gap: .7rem !important;
-      }
-
-      .hero-btns a { text-align: center !important; }
-
-      .hero-photos {
-        position: static !important;
-        transform: none !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        gap: .6rem !important;
-        mask-image: none !important;
-        -webkit-mask-image: none !important;
-        width: 100% !important;
-        margin-top: 1.2rem !important;
-        overflow-x: auto !important;
-        padding-bottom: .5rem !important;
-      }
-
-      .hp1 { width: 42vw !important; height: 52vw !important; align-self: auto !important; animation: none !important; }
-      .hp2 { width: 34vw !important; height: 42vw !important; align-self: auto !important; margin-left: 0 !important; animation: none !important; }
-      .hp3 { width: 38vw !important; height: 46vw !important; align-self: auto !important; margin-top: 0 !important; animation: none !important; }
-    }
-
-    /* ── VINYL (eliminado, mantener por si se reactiva) ── */
+    .hero-photo:hover { transform: scale(1.03); box-shadow: 0 12px 40px rgba(0,0,0,.6), 0 0 20px rgba(224,64,96,.2); }
+    .hp1 { width: 240px; height: 310px; align-self: flex-end; animation: floatA 7s ease-in-out infinite; }
+    .hp2 { width: 180px; height: 220px; align-self: flex-start; margin-left: -25px; animation: floatB 8s ease-in-out infinite; }
+    .hp3 { width: 210px; height: 250px; align-self: flex-end; margin-top: -25px; animation: floatA 9s ease-in-out infinite reverse; }
+    @keyframes floatA { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    @keyframes floatB { 0%, 100% { transform: translateY(-5px); } 50% { transform: translateY(8px); } }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.88) saturate(1.15); }
+    .hp-placeholder { display: none; width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; color: rgba(255,255,255,.4); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; }
+    .hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 55%, rgba(10,5,5,.45)); pointer-events: none; }
 
     /* ── CARRUSEL ── */
-
-    /* ── CARRUSEL ── */
-    .carousel-section {
-      padding: 5rem 0 4rem;
-      position: relative; z-index: 2;
-    }
-
-    .carousel-header {
-      padding: 0 3rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .carousel-track-wrap {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-track {
-      display: flex;
-      gap: 1.2rem;
-      padding: 0 3rem;
-      transition: transform .5s cubic-bezier(.4,0,.2,1);
-      will-change: transform;
-    }
-
-    .carousel-slide {
-      position: relative;
-      flex: 0 0 520px;
-      height: 650px;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .carousel-slide img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform .5s ease;
-      filter: brightness(.85) saturate(1.1);
-    }
-
-    .carousel-slide:hover img {
-      transform: scale(1.04);
-      filter: brightness(.95) saturate(1.2);
-    }
-
-    /* placeholder cuando no hay imagen */
-    .slide-placeholder {
-      display: none;
-      width: 100%; height: 100%;
-      flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .8rem;
-      color: rgba(255,255,255,.4);
-      font-size: .75rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .slide-caption {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 2.5rem 1.6rem 1rem;
-      background: linear-gradient(to top, rgba(9,9,9,.9), transparent);
-      font-size: .8rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transform: translateY(100%);
-      transition: transform .35s ease;
-    }
-
-    .carousel-slide:hover .slide-caption {
-      transform: translateY(0);
-    }
-
-    /* en móvil el caption siempre visible (no hay hover táctil) */
-    @media (max-width: 768px) {
-      .slide-caption { transform: translateY(0); }
-    }
-
-    /* flechas */
-    .carousel-btn {
-      position: absolute;
-      top: 50%; transform: translateY(-50%);
-      width: 50px; height: 50px;
-      border-radius: 50%;
-      background: rgba(9,9,9,.7);
-      border: 1px solid rgba(224,64,251,.3);
-      color: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background .25s, border-color .25s, transform .25s;
-      z-index: 10;
-      backdrop-filter: blur(8px);
-    }
-
-    .carousel-btn:hover {
-      background: rgba(224,64,251,.25);
-      border-color: var(--fuchsia);
-      transform: translateY(-50%) scale(1.08);
-    }
-
+    .carousel-section { padding: 5rem 0 4rem; position: relative; z-index: 2; }
+    .carousel-header { padding: 0 3rem; margin-bottom: 2.5rem; }
+    .carousel-track-wrap { position: relative; overflow: hidden; }
+    .carousel-track { display: flex; gap: 1.2rem; padding: 0 3rem; transition: transform .5s cubic-bezier(.4,0,.2,1); will-change: transform; }
+    .carousel-slide { position: relative; flex: 0 0 520px; height: 650px; border-radius: 8px; overflow: hidden; cursor: pointer; }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; filter: brightness(.85) saturate(1.1); }
+    .carousel-slide:hover img { transform: scale(1.04); filter: brightness(.95) saturate(1.2); }
+    .slide-placeholder { display: none; width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center; gap: .8rem; color: rgba(255,255,255,.4); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+    .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 2.5rem 1.6rem 1rem; background: linear-gradient(to top, rgba(10,5,5,.9), transparent); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); transform: translateY(100%); transition: transform .35s ease; }
+    .carousel-slide:hover .slide-caption { transform: translateY(0); }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 50%; background: rgba(10,5,5,.7); border: 1px solid rgba(224,64,96,.3); color: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .25s, border-color .25s, transform .25s; z-index: 10; backdrop-filter: blur(8px); }
+    .carousel-btn:hover { background: rgba(224,64,96,.25); border-color: var(--rose); transform: translateY(-50%) scale(1.08); }
     .carousel-prev { left: 1rem; }
     .carousel-next { right: 1rem; }
-
-    /* dots */
-    .carousel-dots {
-      display: flex; justify-content: center; gap: .5rem;
-      margin-top: 1.8rem;
-    }
-
-    .carousel-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: rgba(245,240,255,.2);
-      border: none; cursor: pointer;
-      transition: background .3s, width .3s;
-    }
-
-    .carousel-dot.active {
-      background: var(--fuchsia);
-      width: 22px;
-      border-radius: 3px;
-      box-shadow: 0 0 10px rgba(224,64,251,.6);
-    }
-
-    @media (max-width: 768px) {
-      .carousel-slide { flex: 0 0 88vw; height: 110vw; max-height: 520px; }
-      .carousel-track  { padding: 0 1.2rem; gap: .8rem; }
-      .carousel-header { padding: 0 1.5rem; }
-      .carousel-btn    { width: 40px; height: 40px; }
-    }
+    .carousel-dots { display: flex; justify-content: center; gap: .5rem; margin-top: 1.8rem; }
+    .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,245,247,.2); border: none; cursor: pointer; transition: background .3s, width .3s; }
+    .carousel-dot.active { background: var(--rose); width: 22px; border-radius: 3px; box-shadow: 0 0 10px rgba(224,64,96,.6); }
 
     /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
     .hero-eyebrow { animation: fadeUp .6s ease both .1s; }
     .hero-title   { animation: fadeUp .7s ease both .25s; }
     .hero-sub     { animation: fadeUp .7s ease both .4s; }
     .hero-btns    { animation: fadeUp .7s ease both .55s; }
 
-    /* ── RESPONSIVE ── */
+    /* ── TABLET ── */
+    @media (max-width: 1050px) {
+      .hero-photos { right: 1%; }
+      .hp1 { width: 170px; height: 220px; }
+      .hp2 { width: 130px; height: 160px; }
+      .hp3 { width: 150px; height: 185px; }
+    }
+
+    /* ── MÓVIL ── */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .section { padding: 5rem 1.5rem; }
-      .tour-item { grid-template-columns: 90px 1fr; grid-template-rows: auto auto; }
-      .tour-venue { display: none; }
       .newsletter { margin: 1rem 1.5rem 4rem; padding: 3rem 1.5rem; }
-      .nl-form { flex-direction: column; }
       footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      .hero-launch { flex-direction: column !important; align-items: flex-start !important; padding: 6rem 1.4rem 2.5rem !important; }
+      .launch-inner { max-width: 100% !important; width: 100% !important; }
+      .launch-title { font-size: clamp(2.8rem, 14vw, 4.5rem) !important; }
+      .launch-meta { flex-direction: column !important; align-items: flex-start !important; gap: .35rem !important; }
+      .launch-meta-dot { display: none !important; }
+      .hero-btns { flex-direction: column !important; width: 100% !important; gap: .7rem !important; }
+      .hero-btns a { text-align: center !important; }
+      .hero-photos { position: static !important; transform: none !important; flex-direction: row !important; justify-content: center !important; gap: .6rem !important; mask-image: none !important; -webkit-mask-image: none !important; width: 100% !important; margin-top: 1.2rem !important; overflow-x: auto !important; padding-bottom: .5rem !important; }
+      .hp1 { width: 42vw !important; height: 52vw !important; align-self: auto !important; animation: none !important; }
+      .hp2 { width: 34vw !important; height: 42vw !important; align-self: auto !important; margin-left: 0 !important; animation: none !important; }
+      .hp3 { width: 38vw !important; height: 46vw !important; align-self: auto !important; margin-top: 0 !important; animation: none !important; }
+      .carousel-slide { flex: 0 0 88vw; height: 110vw; max-height: 520px; }
+      .carousel-track  { padding: 0 1.2rem; gap: .8rem; }
+      .carousel-header { padding: 0 1.5rem; }
+      .carousel-btn    { width: 40px; height: 40px; }
+      .streaming-section { padding: 4rem 1.5rem; }
+      .streaming-grid { flex-direction: column; align-items: center; }
+      .slide-caption { transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
+  <!-- FLOATING SOCIAL ICONS -->
+  <div class="floating-socials">
+    <a class="float-icon" href="https://www.instagram.com/ginethnoriega8?igsh=OXpwZmZpcWhoZXBn" target="_blank" rel="noopener" data-label="Instagram">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+      </svg>
+    </a>
+    <a class="float-icon" href="https://www.youtube.com/@noripau8" target="_blank" rel="noopener" data-label="YouTube">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+    </a>
+    <a class="float-icon" href="#" target="_blank" rel="noopener" data-label="Spotify">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+      </svg>
+    </a>
+    <a class="float-icon" href="https://www.tiktok.com/@.ginethnoriega?_r=1&_t=ZS-96KhgVgEO9s" target="_blank" rel="noopener" data-label="TikTok">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+      </svg>
+    </a>
+  </div>
+
   <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#">Gineth Noriega</a>
     <ul class="nav-links">
-      <li><a href="#tour">Eventos</a></li>
-      <li><a href="#musica">Música</a></li>
+      <li><a href="#sencillo">Sencillo</a></li>
+      <li><a href="#streaming">Escuchar</a></li>
+      <li><a href="#galeria">Fotos</a></li>
+      <li><a href="#covers">Covers</a></li>
       <li><a href="#bio">Sobre mí</a></li>
-      <li><a href="#tienda">Tienda</a></li>
     </ul>
   </nav>
 
-  <!-- HERO — LANZAMIENTO SENCILLO -->
-  <section class="hero hero-launch">
+  <!-- ① YA NO ESTÁS — DISPONIBLE -->
+  <section class="hero hero-launch" id="sencillo">
     <div class="hero-bg"></div>
-
-    <!-- partículas decorativas -->
     <div class="hero-circle"></div>
     <div class="hero-circle hc2"></div>
 
-    <!-- cuenta regresiva + contenido -->
     <div class="hero-inner launch-inner">
       <span class="hero-eyebrow">✦ Primer Sencillo Oficial — Gineth Noriega</span>
-
-      <p class="launch-tag">NUEVO LANZAMIENTO</p>
+      <p class="launch-tag">YA DISPONIBLE</p>
 
       <h1 class="hero-title launch-title">
         <em>Ya no</em>
@@ -909,12 +456,7 @@
       <div class="launch-meta">
         <div class="launch-meta-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          Sábado 30 de Mayo, 2026
-        </div>
-        <div class="launch-meta-dot">·</div>
-        <div class="launch-meta-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          8:00 PM
+          Lanzado el 30 de Mayo, 2026
         </div>
         <div class="launch-meta-dot">·</div>
         <div class="launch-meta-item">
@@ -923,57 +465,30 @@
         </div>
       </div>
 
-      <!-- Countdown grande -->
-      <div class="countdown-wrap">
-        <p class="cd-title-label">Faltan</p>
-        <div class="countdown" id="countdown">
-          <div class="cd-block">
-            <span class="cd-num" id="cd-dias">--</span>
-            <span class="cd-label">días</span>
-          </div>
-          <div class="cd-sep">:</div>
-          <div class="cd-block">
-            <span class="cd-num" id="cd-horas">--</span>
-            <span class="cd-label">horas</span>
-          </div>
-          <div class="cd-sep">:</div>
-          <div class="cd-block">
-            <span class="cd-num" id="cd-min">--</span>
-            <span class="cd-label">min</span>
-          </div>
-          <div class="cd-sep">:</div>
-          <div class="cd-block">
-            <span class="cd-num" id="cd-seg">--</span>
-            <span class="cd-label">seg</span>
-          </div>
-        </div>
-      </div>
-
       <div class="hero-btns">
-        <a href="https://maps.app.goo.gl/Rdry5EFvBa8AEbDJ8" class="btn-primary">Ubicacion</a>
-        <a href="#musica" class="btn-ghost">Ver más música</a>
+        <a href="#streaming" class="btn-primary">Escuchar ahora</a>
+        <a href="#covers" class="btn-ghost">Ver más música</a>
       </div>
     </div>
 
-    <!-- collage de fotos derecha -->
     <div class="hero-photos">
       <div class="hero-photo hp1">
         <img src="./Photos/Gineth1.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="hp-placeholder" style="background:linear-gradient(160deg,#3d1060,#e040fb)">
+        <div class="hp-placeholder" style="background:linear-gradient(160deg,#5a0a15,#e04060)">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
           <span>hero1.jpg</span>
         </div>
       </div>
       <div class="hero-photo hp2">
         <img src="./Photos/Gineth2.jpg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="hp-placeholder" style="background:linear-gradient(160deg,#1a0a3a,#c084fc)">
+        <div class="hp-placeholder" style="background:linear-gradient(160deg,#4a0a15,#c04060)">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
           <span>hero2.jpg</span>
         </div>
       </div>
       <div class="hero-photo hp3">
         <img src="./Photos/Gineth4.jpg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="hp-placeholder" style="background:linear-gradient(160deg,#2e0845,#f472d0)">
+        <div class="hp-placeholder" style="background:linear-gradient(160deg,#3a0508,#f47288)">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
           <span>hero3.jpg</span>
         </div>
@@ -981,267 +496,114 @@
     </div>
   </section>
 
-  <script>
-    // Countdown al 30 May 2026 8:00 PM hora Colombia (UTC-5)
-    // Colombia no tiene horario de verano, siempre UTC-5
-    // UTC equivalente: 2026-05-31 01:00:00 UTC
-    function updateCd() {
-      const target = new Date('2026-05-31T01:00:00Z');
-      const now    = new Date();
-      const diff   = target - now;
-
-      if (diff <= 0) {
-        document.getElementById('countdown').innerHTML =
-          '<p style="color:var(--fuchsia);font-size:1.4rem;letter-spacing:.1em;text-align:center">¡El momento llegó! 🎶</p>';
-        return;
-      }
-
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000)  / 60000);
-      const s = Math.floor((diff % 60000)    / 1000);
-
-      document.getElementById('cd-dias').textContent  = String(d).padStart(2,'0');
-      document.getElementById('cd-horas').textContent = String(h).padStart(2,'0');
-      document.getElementById('cd-min').textContent   = String(m).padStart(2,'0');
-      document.getElementById('cd-seg').textContent   = String(s).padStart(2,'0');
-    }
-    updateCd();
-    setInterval(updateCd, 1000);
-  </script>
-
-  <!-- TOUR -->
-  <section class="section" id="tour">
-    <div class="section-header">
-      <div>
-        <p class="section-label">Próximas fechas</p>
-        <h2 class="section-title">Eventos &amp; Conciertos</h2>
-      </div>
-      <a href="#" class="btn-ghost">Ver todos</a>
-    </div>
-
-    <div class="tour-list">
-      <!-- LANZAMIENTO ESPECIAL -->
-      <div class="tour-item tour-item-featured">
-        <div class="tour-date" style="color:var(--fuchsia)">30<span>May 2025</span></div>
-        <div class="tour-info">
-          <h3>🎶 Presentacion — "Ya no estás"</h3>
-          <p>Primer sencillo oficial · Restaurante Oye Bonita</p>
-        </div>
-        <div class="tour-venue">
-          <strong>Oye Bonita</strong>
-          <p>Apertura: 8:00 pm</p>
-        </div>
-      </div>
-      
   <div class="divider"></div>
 
-  <!-- MÚSICA -->
+  <!-- ② MÚSICA -->
   <section class="section" id="musica">
     <div class="section-header">
       <div>
-        <p class="section-label">Discografía</p>
+        <p class="section-label">Primer Sencillo</p>
         <h2 class="section-title">Música</h2>
       </div>
-      <a href="#" class="btn-ghost">Escuchar todo</a>
     </div>
-
     <div class="music-grid">
-      <!-- cards generadas con CSS gradients como placeholders de álbum -->
       <div class="music-card">
-        <!-- imagen del álbum: cubre toda la card centrada -->
-<a href="https://open.spotify.com/intl-es/track/4TC1Qg5PziZeanrdOW0Zu4?si=yrJ92aMURsCfy_t4MTVH8g&nd=1&dlsi=1affb6c9cb604af7" target="_blank">
-  <div class="music-card">
-    <img src="./Photos/Yanoestas.jpg" alt="Ya no Estás — Gineth Noriega"
-         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
-         onerror="this.style.display='none'"/>
-    <div class="music-card-bg" style="background: linear-gradient(135deg,#3d1060,#e040fb);">
-      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-        <circle cx="30" cy="30" r="28" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-        <circle cx="30" cy="30" r="10" fill="rgba(255,255,255,.1)"/>
-      </svg>
-    </div>
-    <div class="music-card-overlay">
-      <div class="music-card-info">
-        <h4>Ya no Estás</h4>
-        <p>Lanzamiento 28 de mayo</p>
-      </div>
-    </div>
-    <div class="play-btn">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="white">
-        <polygon points="5,2 16,9 5,16"/>
-      </svg>
-    </div>
-  </div>
-</a>
-
-
-      <div class="music-card">
-        <div class="music-card-bg" style="background: linear-gradient(135deg,#1a0a3a,#7b3fbe);">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect x="10" y="10" width="40" height="40" rx="4" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="8" fill="rgba(255,255,255,.1)"/></svg>
+        <img src="./Photos/Yanoestas.jpg" alt="Ya no Estás — Gineth Noriega"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
+             onerror="this.style.display='none'"/>
+        <div class="music-card-bg" style="background: linear-gradient(135deg,#5a0a15,#e04060);">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="10" fill="rgba(255,255,255,.1)"/></svg>
         </div>
         <div class="music-card-overlay">
           <div class="music-card-info">
-            <h4>Proximamente</h4>
-            <p>Proximamente</p>
+            <h4>Ya no Estás</h4>
+            <p>Lanzamiento 28 de mayo</p>
           </div>
         </div>
         <button class="play-btn">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
         </button>
       </div>
-       
-    </div>
-  </section>
-  <!-- COVERS-->
-  <section class="section" id="musica">
-    <div class="section-header">
-      <div>
-        <p class="section-label">Discografía</p>
-        <h2 class="section-title">Covers</h2>
-      </div>
-      <a href="https://www.youtube.com/@noripau8?si=B6xv5TJGiI-EH12L" class="btn-ghost">Escuchar todo</a>
-    </div>
-
-    <div class="music-grid">
-      <!-- cards generadas con CSS gradients como placeholders de álbum -->
       <div class="music-card">
-        <!-- imagen del álbum: cubre toda la card centrada -->
-        <img src="./Photos/Cover1.png" alt="Greeicy, Cultura Profética - Te Creí (cover) — Gineth Noriega"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
-             onerror="this.style.display='none'"/>
-        <!-- fallback gradient si no carga la imagen -->
-        <div class="music-card-bg" style="background: linear-gradient(135deg,#3d1060,#e040fb);">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="10" fill="rgba(255,255,255,.1)"/></svg>
-        </div>
-        <div class="music-card-overlay">
-          <div class="music-card-info">
-            <h4>Greeicy, Cultura Profética - Te Creí (cover)</h4>
-            <p> 2 feb 2022</p>
-          </div>
-        </div>
-        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=QTxSvqYlSCo','_blank')">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
-        </button>
-      </div>
-
-      <div class="music-card">
-        <img src="./Photos/Cover2.png" alt="Greeicy, Cultura Profética - Te Creí (cover) — Gineth Noriega"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
-             onerror="this.style.display='none'"/>
-        <div class="music-card-bg" style="background: linear-gradient(135deg,#1a0a3a,#7b3fbe);">
+        <div class="music-card-bg" style="background: linear-gradient(135deg,#2a0508,#b01b2e);">
           <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect x="10" y="10" width="40" height="40" rx="4" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="8" fill="rgba(255,255,255,.1)"/></svg>
         </div>
         <div class="music-card-overlay">
           <div class="music-card-info">
-            <h4>Jesse y joy - Dueles ( Cover)</h4>
-            <p>11 jun 2020</p>
+            <h4>Próximamente</h4>
+            <p>Próximamente</p>
           </div>
         </div>
-        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=FIb3m6Redf4','_blank')">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
-        </button>
-      </div>
-
-      <div class="music-card">
-        <img src="./Photos/Cover3.png" alt="Greeicy, Cultura Profética - Te Creí (cover) — Gineth Noriega"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
-             onerror="this.style.display='none'"/>
-        <div class="music-card-bg" style="background: linear-gradient(135deg,#5b2d8e,#c084fc);">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="rgba(255,255,255,.15)" stroke-width="1.5" stroke-dasharray="6 3"/><circle cx="30" cy="30" r="7" fill="rgba(255,255,255,.12)"/></svg>
-        </div>
-        <div class="music-card-overlay">
-          <div class="music-card-info">
-            <h4>J Alvarez - Nada es eterno(Cover)</h4>
-            <p> 9 ago 2020</p>
-          </div>
-        </div>
-        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=iqVUlMzrOjg','_blank')">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
-        </button>
-      </div>
-
-      <div class="music-card">
-        <img src="./Photos/Cover4.png" alt="— Gineth Noriega"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
-             onerror="this.style.display='none'"/>
-        <div class="music-card-bg" style="background: linear-gradient(135deg,#2e0845,#f472d0);">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><path d="M15 15 L45 45 M45 15 L15 45" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="12" fill="rgba(255,255,255,.08)"/></svg>
-        </div>
-        <div class="music-card-overlay">
-          <div class="music-card-info">
-            <h4>Tini ft Yatra - Oye (Mini Cover)</h4>
-            <p>8 ago 2020</p>
-          </div>
-        </div>
-        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=2446bC4y454','_blank')">
+        <button class="play-btn">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
         </button>
       </div>
     </div>
   </section>
 
-  <!-- CARRUSEL FOTOS (Bio / Galería) -->
+  <div class="divider"></div>
+
+  <!-- ③ YOUTUBE & SPOTIFY -->
+  <section class="streaming-section" id="streaming">
+    <p class="section-label" style="text-align:center">Escúchame en</p>
+    <h2 class="section-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:.06em;text-align:center">YouTube &amp; Spotify</h2>
+    <p style="color:var(--muted);margin-top:.8rem;font-size:.9rem">Sigue mi música en tus plataformas favoritas</p>
+    <div class="streaming-grid">
+      <a href="https://www.youtube.com/@noripau8" target="_blank" rel="noopener" class="stream-btn stream-btn-yt">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        Escuchar en YouTube
+      </a>
+      <a href="#" target="_blank" rel="noopener" class="stream-btn stream-btn-sp">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        Escuchar en Spotify
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ④ FOTOS (CARRUSEL) -->
   <section class="carousel-section" id="galeria">
     <div class="carousel-header">
       <p class="section-label">Galería</p>
-      <h2 class="section-title">Gineth</h2>
+      <h2 class="section-title">Fotos</h2>
     </div>
-
     <div class="carousel-track-wrap">
       <div class="carousel-track" id="bioTrack">
 
         <div class="carousel-slide">
           <img src="./Photos/GinethHistoria1.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#3d1060,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto1.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto1.jpg</span></div>
           <div class="slide-caption">Ingenieria Industrial</div>
         </div>
 
         <div class="carousel-slide">
           <img src="./Photos/GinethHistoria2.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#1a0a3a,#c084fc)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto2.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#3a0508,#c04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto2.jpg</span></div>
           <div class="slide-caption">Presentacion con Alcaldia de Barranquilla</div>
         </div>
 
         <div class="carousel-slide">
           <img src="./Photos/GinethHistoria3.jpg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5b2d8e,#f472d0)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto3.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#7a0f1e,#f47288)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto3.jpg</span></div>
           <div class="slide-caption">Técnico en Música de la ESCUELA DISTRITAL DE ARTES EDA</div>
         </div>
 
         <div class="carousel-slide">
           <img src="./Photos/GinethHistoria4.jpg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#2e0845,#7b3fbe)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto4.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a0a15,#b01b2e)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto4.jpg</span></div>
           <div class="slide-caption">Primera Presentacion</div>
         </div>
 
         <div class="carousel-slide">
           <img src="./Photos/GinethHistoria5.jpg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto5.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto5.jpg</span></div>
           <div class="slide-caption">Performance</div>
         </div>
 
         <div class="carousel-slide">
-          <img src="./Photos/GinethHistoria6.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto6.jpg</span>
-          </div>
+          <img src="./Photos/GInethHistoria6.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto6.jpg</span></div>
           <div class="slide-caption">En TunasCUC</div>
         </div>
 
@@ -1249,53 +611,41 @@
           <a href="https://www.youtube.com/watch?v=oq_X05h14LY">
             <img src="./Photos/GinethHistoria7.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
           </a>
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto7.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto7.jpg</span></div>
           <div class="slide-caption">Cover en Pandemia</div>
         </div>
+
         <div class="carousel-slide">
           <img src="./Photos/GinethHistoria8.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto8.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto8.jpg</span></div>
           <div class="slide-caption">En el cerrejon</div>
         </div>
+
         <div class="carousel-slide">
           <a href="https://www.instagram.com/p/BRPqP-ahKG5/?igsh=NDU4bTBkZm51cTk5">
             <img src="./Photos/GinethHistoria9.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
           </a>
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto9.jpg</span>
-          </div>
-          <div class="slide-caption">Fuiste tú💜💜</div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto9.jpg</span></div>
+          <div class="slide-caption">Fuiste tú</div>
         </div>
+
         <div class="carousel-slide">
           <a href="https://www.instagram.com/p/BX4G1MHgZP4/?img_index=2&igsh=c29xbXdhcW0xY3k2">
             <img src="./Photos/GinethHistoria10.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
           </a>
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto10.jpg</span>
-          </div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto10.jpg</span></div>
           <div class="slide-caption">Aparicion en TV</div>
         </div>
+
         <div class="carousel-slide">
           <a href="https://www.instagram.com/p/BZyW66_gwdM/?igsh=NWVtcmNkenJxNGV3">
             <img src="./Photos/GinethHistoria11.jpeg" alt="Gineth Noriega" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
           </a>
-          <div class="slide-placeholder" style="background:linear-gradient(135deg,#4a1070,#e040fb)">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>foto11.jpg</span>
-          </div>
-          <div class="slide-caption">Los gitanos - Tuna de la  Universidad de la Costa</div>
+          <div class="slide-placeholder" style="background:linear-gradient(135deg,#5a0a15,#e04060)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>foto11.jpg</span></div>
+          <div class="slide-caption">Los gitanos - Tuna de la Universidad de la Costa</div>
         </div>
 
       </div>
-
       <button class="carousel-btn carousel-prev" id="bioPrev" aria-label="Anterior">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
@@ -1303,40 +653,99 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
-
     <div class="carousel-dots" id="bioDots"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ⑤ COVERS -->
+  <section class="section" id="covers">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Discografía</p>
+        <h2 class="section-title">Covers</h2>
+      </div>
+      <a href="https://www.youtube.com/@noripau8?si=B6xv5TJGiI-EH12L" class="btn-ghost">Escuchar todo</a>
+    </div>
+    <div class="music-grid">
+      <div class="music-card">
+        <img src="./Photos/Cover1.png" alt="Greeicy, Cultura Profética - Te Creí (cover) — Gineth Noriega"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
+             onerror="this.style.display='none'"/>
+        <div class="music-card-bg" style="background: linear-gradient(135deg,#5a0a15,#e04060);">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="10" fill="rgba(255,255,255,.1)"/></svg>
+        </div>
+        <div class="music-card-overlay"><div class="music-card-info"><h4>Greeicy, Cultura Profética - Te Creí (cover)</h4><p>2 feb 2022</p></div></div>
+        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=QTxSvqYlSCo','_blank')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
+        </button>
+      </div>
+      <div class="music-card">
+        <img src="./Photos/Cover2.png" alt="Jesse y joy - Dueles (Cover) — Gineth Noriega"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
+             onerror="this.style.display='none'"/>
+        <div class="music-card-bg" style="background: linear-gradient(135deg,#3a0508,#b01b2e);">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect x="10" y="10" width="40" height="40" rx="4" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="8" fill="rgba(255,255,255,.1)"/></svg>
+        </div>
+        <div class="music-card-overlay"><div class="music-card-info"><h4>Jesse y joy - Dueles (Cover)</h4><p>11 jun 2020</p></div></div>
+        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=FIb3m6Redf4','_blank')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
+        </button>
+      </div>
+      <div class="music-card">
+        <img src="./Photos/Cover3.png" alt="J Alvarez - Nada es eterno (Cover) — Gineth Noriega"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
+             onerror="this.style.display='none'"/>
+        <div class="music-card-bg" style="background: linear-gradient(135deg,#7a0f1e,#f47288);">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="rgba(255,255,255,.15)" stroke-width="1.5" stroke-dasharray="6 3"/><circle cx="30" cy="30" r="7" fill="rgba(255,255,255,.12)"/></svg>
+        </div>
+        <div class="music-card-overlay"><div class="music-card-info"><h4>J Alvarez - Nada es eterno (Cover)</h4><p>9 ago 2020</p></div></div>
+        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=iqVUlMzrOjg','_blank')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
+        </button>
+      </div>
+      <div class="music-card">
+        <img src="./Photos/Cover4.png" alt="Tini ft Yatra - Oye (Mini Cover) — Gineth Noriega"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
+             onerror="this.style.display='none'"/>
+        <div class="music-card-bg" style="background: linear-gradient(135deg,#4a0a15,#fca5b4);">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><path d="M15 15 L45 45 M45 15 L15 45" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/><circle cx="30" cy="30" r="12" fill="rgba(255,255,255,.08)"/></svg>
+        </div>
+        <div class="music-card-overlay"><div class="music-card-info"><h4>Tini ft Yatra - Oye (Mini Cover)</h4><p>8 ago 2020</p></div></div>
+        <button class="play-btn" onclick="window.open('https://www.youtube.com/watch?v=2446bC4y454','_blank')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><polygon points="5,2 16,9 5,16"/></svg>
+        </button>
+      </div>
+    </div>
   </section>
 
   <!-- BIO -->
   <div class="newsletter" id="bio">
-  <p class="section-label">Sobre mi</p>
-  <h2>Un poco de mi historia</h2>
-  <p>
-    Desde muy joven, la música ha sido parte esencial de mi vida. En 2015 inicié mi formación artística realizando un técnico en música en la Escuela Distrital de Arte de mi ciudad, un proceso que fortaleció mi pasión por el canto y la interpretación.
-Aunque decidí estudiar Ingeniería Industrial en la universidad, nunca me alejé del arte. Durante mi etapa universitaria participé activamente en agrupaciones culturales como la tuna, el coro y el grupo de folclor Numbalé. En la tuna me destaqué como cantante y ejecutando las castañuelas, mientras que en el grupo folclórico fui una de las voces principales, representando con orgullo nuestras raíces musicales.
-Después de graduarme como ingeniera industrial, inicié mi camino profesional en el sector bancario y financiero. Sin embargo, la música siempre siguió viva en mí. Fue entonces cuando descubrí el mundo de los lives y el streaming, espacios que me permitieron volver a conectar con el público desde una manera más cercana y auténtica.
-Entre 2022 y 2023 hice parte de la plataforma Bigo Live, donde fortalecí mi presencia como cantante en transmisiones en vivo. A finales de 2023 inicié una nueva etapa en TikTok Live, plataforma en la que actualmente continúo creciendo y construyendo una comunidad que ha creído profundamente en mi talento y en mi voz.
-Gracias al apoyo de esa comunidad, hoy estoy dando uno de los pasos más importantes de mi carrera artística: lanzar mi primer sencillo de autoría propia. Oficialmente, estoy iniciando mi camino como cantautora, llevando conmigo todas las experiencias, escenarios y aprendizajes que han marcado mi historia.
-  </p>
-  <div class="nl-form">
-    
+    <p class="section-label">Sobre mi</p>
+    <h2>Un poco de mi historia</h2>
+    <p>
+      Desde muy joven, la música ha sido parte esencial de mi vida. En 2015 inicié mi formación artística realizando un técnico en música en la Escuela Distrital de Arte de mi ciudad, un proceso que fortaleció mi pasión por el canto y la interpretación.
+      Aunque decidí estudiar Ingeniería Industrial en la universidad, nunca me alejé del arte. Durante mi etapa universitaria participé activamente en agrupaciones culturales como la tuna, el coro y el grupo de folclor Numbalé. En la tuna me destaqué como cantante y ejecutando las castañuelas, mientras que en el grupo folclórico fui una de las voces principales, representando con orgullo nuestras raíces musicales.
+      Después de graduarme como ingeniera industrial, inicié mi camino profesional en el sector bancario y financiero. Sin embargo, la música siempre siguió viva en mí. Fue entonces cuando descubrí el mundo de los lives y el streaming, espacios que me permitieron volver a conectar con el público desde una manera más cercana y auténtica.
+      Entre 2022 y 2023 hice parte de la plataforma Bigo Live, donde fortalecí mi presencia como cantante en transmisiones en vivo. A finales de 2023 inicié una nueva etapa en TikTok Live, plataforma en la que actualmente continúo creciendo y construyendo una comunidad que ha creído profundamente en mi talento y en mi voz.
+      Gracias al apoyo de esa comunidad, hoy estoy dando uno de los pasos más importantes de mi carrera artística: lanzar mi primer sencillo de autoría propia. Oficialmente, estoy iniciando mi camino como cantautora, llevando conmigo todas las experiencias, escenarios y aprendizajes que han marcado mi historia.
+    </p>
+    <div class="nl-form"></div>
   </div>
-</div>
-
 
   <!-- FOOTER -->
   <footer>
     <span class="footer-logo">Gineth Noriega</span>
     <div class="social-links">
       <a href="https://www.instagram.com/ginethnoriega8?igsh=OXpwZmZpcWhoZXBn">Instagram</a>
-      <a href="https://open.spotify.com/intl-es/artist/7hXRBTbNKE7u13dyMeERTp?si=jyy_BI_ERXac3XtyRXYHYw&nd=1&dlsi=0255d6b1afbc4ebf">Spotify</a>
+      <a href="#">Spotify</a>
       <a href="https://www.youtube.com/@noripau8">YouTube</a>
       <a href="https://www.tiktok.com/@.ginethnoriega?_r=1&_t=ZS-96KhgVgEO9s">TikTok</a>
     </div>
     <span class="footer-copy">© 2026 Gineth Noriega. Todos los derechos reservados.</span>
   </footer>
+
   <script>
-    // ── FUNCIÓN GENÉRICA DE CARRUSEL ──
     function initCarousel(trackId, prevId, nextId, dotsId) {
       const track    = document.getElementById(trackId);
       const btnPrev  = document.getElementById(prevId);
@@ -1345,8 +754,7 @@ Gracias al apoyo de esa comunidad, hoy estoy dando uno de los pasos más importa
       if (!track) return;
 
       const slides = track.querySelectorAll('.carousel-slide');
-      let current = 0;
-      let autoTimer;
+      let current = 0, autoTimer;
 
       slides.forEach((_, i) => {
         const d = document.createElement('button');
@@ -1376,7 +784,7 @@ Gracias al apoyo de esa comunidad, hoy estoy dando uno de los pasos más importa
 
       let touchStartX = 0;
       track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-      track.addEventListener('touchend',   e => {
+      track.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - touchStartX;
         if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); resetAuto(); }
       });
@@ -1386,7 +794,6 @@ Gracias al apoyo de esa comunidad, hoy estoy dando uno de los pasos más importa
       startAuto();
     }
 
-    // Carrusel galería / bio
     initCarousel('bioTrack', 'bioPrev', 'bioNext', 'bioDots');
   </script>
 
